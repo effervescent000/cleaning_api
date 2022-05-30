@@ -61,4 +61,64 @@ def runner(app):
 
 
 def populate_test_data():
-    ...
+    users = [
+        shapes.user_record_factory(id=1, username="Admin", role="admin"),
+        shapes.user_record_factory(id=2, username="TestUser"),
+    ]
+
+    for user in users:
+        user.password = User.hash_password("test_password")
+        db.session.add(user)
+        db.session.commit()
+
+    rooms = [
+        shapes.room_record_factory(label="Bedroom", user_id=users[0].id),
+        shapes.room_record_factory(label="Bathroom", user_id=users[0].id),
+        shapes.room_record_factory(label="Bedroom", user_id=users[1].id),
+        shapes.room_record_factory(label="Bathroom", user_id=users[1].id),
+    ]
+
+    for room in rooms:
+        db.session.add(room)
+        db.session.commit()
+
+    USER_ONE = users[0]
+    USER_ONE_BEDROOM = USER_ONE.rooms[0]
+    USER_ONE_BATHROOM = USER_ONE.rooms[1]
+
+    USER_TWO = users[1]
+    USER_TWO_BEDROOM = USER_TWO.rooms[0]
+    USER_TWO_BATHROOM = USER_TWO.rooms[1]
+
+    tasks = [
+        shapes.task_record_factory(
+            label="Clean clothes up", room_id=USER_ONE_BEDROOM.id, user_id=users[0].id
+        ),
+        shapes.task_record_factory(
+            label="Vacuum", room_id=USER_ONE_BEDROOM.id, user_id=users[0].id
+        ),
+        shapes.task_record_factory(
+            label="Clean mirror", room_id=USER_ONE_BATHROOM.id, user_id=users[0].id
+        ),
+        shapes.task_record_factory(
+            label="Wash bath mat", room_id=USER_ONE_BATHROOM.id, user_id=users[0].id
+        ),
+        shapes.task_record_factory(
+            label="Dust surfaces", room_id=USER_TWO_BEDROOM.id, user_id=users[1].id
+        ),
+        shapes.task_record_factory(
+            label="Vacuum",
+            room_id=USER_TWO_BEDROOM.id,
+            user_id=users[1].id,
+        ),
+        shapes.task_record_factory(
+            label="Dust surfaces", room_id=USER_TWO_BATHROOM.id, user_id=users[1].id
+        ),
+        shapes.task_record_factory(
+            label="Clean sink", room_id=USER_TWO_BATHROOM.id, user_id=users[1].id
+        ),
+    ]
+
+    for task in tasks:
+        db.session.add(task)
+        db.session.commit()
