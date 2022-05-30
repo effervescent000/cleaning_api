@@ -12,7 +12,7 @@ def user_record_factory(
 
 
 def task_record_factory(
-    *, id: int = None, label: str = None, room_id: int, user_id: int
+    *, id: int = None, label: str = None, room_id: int, user_id: int = None
 ) -> factory_dict:
     return {
         "id": id or randint(1, 100000),
@@ -23,7 +23,7 @@ def task_record_factory(
 
 
 def room_record_factory(
-    *, id: int = None, label: str = None, user_id: int
+    *, id: int = None, label: str = None, user_id: int = None
 ) -> factory_dict:
     return {
         "id": id or randint(1, 100000),
@@ -33,7 +33,7 @@ def room_record_factory(
 
 
 def schedule_record_factory(
-    id: int, *, points: dict = {}, user_id: int
+    id: int, *, points: dict = {}, user_id: int = None
 ) -> factory_dict:
     return {
         "id": id,
