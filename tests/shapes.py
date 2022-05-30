@@ -12,20 +12,22 @@ def user_record_factory(
 
 
 def task_record_factory(
-    id: int, *, label: str = None, room_id: int, user_id: int
+    *, id: int = None, label: str = None, room_id: int, user_id: int
 ) -> factory_dict:
     return {
-        "id": id,
-        "label": label or randint(1, 100000),
+        "id": id or randint(1, 100000),
+        "label": label or f"Task {id}",
         "room_id": room_id,
         "user_id": user_id,
     }
 
 
-def room_record_factory(id: int, *, label: str = None, user_id: int) -> factory_dict:
+def room_record_factory(
+    *, id: int = None, label: str = None, user_id: int
+) -> factory_dict:
     return {
-        "id": id,
-        "label": label or randint(1, 100000),
+        "id": id or randint(1, 100000),
+        "label": label or f"Room {id}",
         "user_id": user_id,
     }
 
