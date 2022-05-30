@@ -59,6 +59,15 @@ def runner(app):
     return app.test_cli_runner()
 
 
+@pytest.fixture
+def clean_room_record():
+    def inner(record):
+        record.pop("id", None)
+        return record
+
+    return inner
+
+
 def populate_test_data():
     users = [
         User(**shapes.user_record_factory(id=1, username="Admin", role="admin")),
