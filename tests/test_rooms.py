@@ -9,13 +9,15 @@ import tests.shapes as shapes
     "given, expected, should",
     [
         (
-            shapes.room_record_factory(label="Kitchen"),
-            shapes.room_record_factory(label="Kitchen", user_id=2),
-            "Return the created room.",
+            shapes.room_record_factory(label="Kitchen", type="kitchen"),
+            shapes.room_record_factory(label="Kitchen", type="kitchen", user_id=2),
+            "Return the created room when room type and label are both new.",
         )
     ],
 )
-def test_add_room(client, user_header, clean_room_record, given, expected, should):
+def test_add_room_valid(
+    client, user_header, clean_room_record, given, expected, should
+):
     response = client.post("/rooms/", json=given, headers=user_header)
     assert response.status_code == 201
 

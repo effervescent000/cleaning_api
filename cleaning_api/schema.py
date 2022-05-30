@@ -11,7 +11,7 @@ multi_task_schema = TaskSchema(many=True)
 
 class RoomSchema(ma.Schema):
     class Meta:
-        fields = ("id", "label", "user_id", "tasks")
+        fields = ("id", "label", "type", "user_id", "tasks")
 
     tasks = multi_task_schema
 

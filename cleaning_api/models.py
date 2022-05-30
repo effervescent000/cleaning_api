@@ -46,7 +46,8 @@ class Task(db.Model):
 class Room(db.Model):
     __tablename__ = "rooms"
     id = db.Column(db.Integer, primary_key=True)
-    label = db.Column(db.String(200), nullable=False)
+    label = db.Column(db.String(200))
+    type = db.Column(db.String(50), nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
