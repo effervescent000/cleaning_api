@@ -23,13 +23,19 @@ def task_record_factory(
 
 
 def room_record_factory(
-    *, id: int = None, label: str = None, type: str = None, user_id: int = None
+    *,
+    id: int = None,
+    label: str = None,
+    type: str = None,
+    user_id: int = None,
+    tasks: list = None,
 ) -> factory_dict:
     return {
         "id": id or randint(1, 100000),
         "label": label or f"Room {id}",
         "type": type or "bedroom",
         "user_id": user_id,
+        "tasks": tasks or [],
     }
 
 
