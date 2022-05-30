@@ -50,7 +50,7 @@ def admin_header():
 @pytest.fixture
 def user_header():
     return {
-        "Authorization": f"Bearer {create_access_token(identity=User.query.filter_by(username='testUser').first())}"
+        "Authorization": f"Bearer {create_access_token(identity=User.query.filter_by(username='TestUser').first())}"
     }
 
 
