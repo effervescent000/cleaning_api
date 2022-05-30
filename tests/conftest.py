@@ -1,10 +1,9 @@
-from dataclasses import dataclass
 import pytest
 from flask_jwt_extended import create_access_token
 
 import tests.shapes as shapes
 from cleaning_api import create_app, db
-from cleaning_api.models import User
+from cleaning_api.models import User, Room, Task
 
 TEST_DATABASE_URI = "sqlite:///test_database.sqlite"
 
@@ -62,8 +61,8 @@ def runner(app):
 
 def populate_test_data():
     users = [
-        shapes.user_record_factory(id=1, username="Admin", role="admin"),
-        shapes.user_record_factory(id=2, username="TestUser"),
+        User(**shapes.user_record_factory(id=1, username="Admin", role="admin")),
+        User(**shapes.user_record_factory(id=2, username="TestUser")),
     ]
 
     for user in users:
@@ -79,7 +78,7 @@ def populate_test_data():
     ]
 
     for room in rooms:
-        db.session.add(room)
+        db.session.add(Room(**room))
         db.session.commit()
 
     USER_ONE = users[0]
@@ -120,5 +119,5 @@ def populate_test_data():
     ]
 
     for task in tasks:
-        db.session.add(task)
+        db.session.add(Task(**task))
         db.session.commit()
