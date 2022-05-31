@@ -38,6 +38,12 @@ class Task(db.Model):
     __tablename__ = "tasks"
     id = db.Column(db.Integer, primary_key=True)
     label = db.Column(db.String(200), nullable=False)
+    points = db.Column(db.Integer, nullable=False)
+    # if the last_done date is null, it's assumed to be at 0% completed
+    last_done = db.Column(db.DateTime)
+    # period is measured in days
+    period = db.Column(db.Integer, nullable=False)
+    note = db.Column(db.Text)
 
     room_id = db.Column(db.Integer, db.ForeignKey("rooms.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)

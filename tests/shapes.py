@@ -12,11 +12,23 @@ def user_record_factory(
 
 
 def task_record_factory(
-    *, id: int = None, label: str = None, room_id: int, user_id: int = None
+    *,
+    id: int = None,
+    label: str = None,
+    points: int = None,
+    last_done: str = None,
+    period: int = None,
+    note: str = None,
+    room_id: int,
+    user_id: int = None,
 ) -> factory_dict:
     return {
         "id": id or randint(1, 100000),
         "label": label or f"Task {id}",
+        "points": points or 1,
+        "last_done": last_done or "2022-5-1T08:00:00",
+        "period": period or 5,
+        "note": note,
         "room_id": room_id,
         "user_id": user_id,
     }
