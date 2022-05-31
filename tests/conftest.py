@@ -1,5 +1,6 @@
 import pytest
 from flask_jwt_extended import create_access_token
+import arrow
 
 import tests.shapes as shapes
 from cleaning_api import create_app, db
@@ -69,6 +70,9 @@ def clean_room_record():
 
 
 def populate_test_data():
+    def clean_dates_in_factory(record):
+        return {**record, "last_done": arrow.get(record["last_done"]).datetime}
+
     users = [
         User(**shapes.user_record_factory(id=1, username="Admin", role="admin")),
         User(**shapes.user_record_factory(id=2, username="TestUser")),
@@ -128,5 +132,5 @@ def populate_test_data():
     ]
 
     for task in tasks:
-        db.session.add(Task(**task))
+        db.session.add(Task(**clean_dates_in_factory(task)))
         db.session.commit()
