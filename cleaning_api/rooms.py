@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, current_user
 
 from .models import Room
 from .schema import RoomSchema
-from . import db, jwt
+from . import db
 
 bp = Blueprint("rooms", __name__, url_prefix="/rooms")
 one_room_schema = RoomSchema()
@@ -20,7 +20,9 @@ def add_room():
     if not type:
         return jsonify({"error": "no room type specified"}), 400
 
-    label = data.get("label", type)
+    label = data.get("label")
+    if not label:
+        label = type.title()
 
     room = Room(type=type, label=label, user_id=current_user.id)
     db.session.add(room)

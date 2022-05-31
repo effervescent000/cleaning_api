@@ -44,7 +44,7 @@ def room_record_factory(
 ) -> factory_dict:
     return {
         "id": id or randint(1, 100000),
-        "label": label or f"Room {id}",
+        "label": label,
         "type": type or "bedroom",
         "user_id": user_id,
         "tasks": tasks or [],

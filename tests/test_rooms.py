@@ -12,7 +12,12 @@ import tests.shapes as shapes
             shapes.room_record_factory(label="Kitchen", type="kitchen"),
             shapes.room_record_factory(label="Kitchen", type="kitchen", user_id=2),
             "Return the created room when room type and label are both new.",
-        )
+        ),
+        (
+            shapes.room_record_factory(type="kitchen"),
+            shapes.room_record_factory(label="Kitchen", type="kitchen", user_id=2),
+            "Return the created room when room type and label are both new.",
+        ),
     ],
 )
 def test_add_room_valid(
