@@ -7,6 +7,7 @@ class TaskSchema(ma.Schema):
             "id",
             "label",
             "points",
+            "partial_effort",
             "last_done",
             "period",
             "note",

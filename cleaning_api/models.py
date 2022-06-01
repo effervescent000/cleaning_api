@@ -39,6 +39,7 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     label = db.Column(db.String(200), nullable=False)
     points = db.Column(db.Integer, nullable=False)
+    partial_effort = db.Column(db.Boolean, default=False)
     # if the last_done date is null, it's assumed to be at 0% completed
     last_done = db.Column(db.DateTime)
     # period is measured in days
