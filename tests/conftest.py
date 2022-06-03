@@ -69,6 +69,15 @@ def clean_room_record():
     return inner
 
 
+@pytest.fixture
+def clean_task_record():
+    def inner(record):
+        record.pop("id", None)
+        return record
+
+    return inner
+
+
 def populate_test_data():
     def clean_dates_in_factory(record):
         return {**record, "last_done": arrow.get(record["last_done"]).datetime}
@@ -84,10 +93,10 @@ def populate_test_data():
         db.session.commit()
 
     rooms = [
-        shapes.room_record_factory(label="Bedroom", user_id=users[0].id),
-        shapes.room_record_factory(label="Bathroom", user_id=users[0].id),
-        shapes.room_record_factory(label="Bedroom", user_id=users[1].id),
-        shapes.room_record_factory(label="Bathroom", user_id=users[1].id),
+        shapes.room_record_factory(id=1, label="Bedroom", user_id=users[0].id),
+        shapes.room_record_factory(id=2, label="Bathroom", user_id=users[0].id),
+        shapes.room_record_factory(id=3, label="Bedroom", user_id=users[1].id),
+        shapes.room_record_factory(id=4, label="Bathroom", user_id=users[1].id),
     ]
 
     for room in rooms:

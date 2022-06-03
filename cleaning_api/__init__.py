@@ -45,4 +45,8 @@ def create_app(test_config=None):
 
         app.register_blueprint(rooms.bp)
 
+        from . import tasks
+
+        app.register_blueprint(tasks.bp)
+
         return app
