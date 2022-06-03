@@ -2,6 +2,13 @@ import pytest
 import tests.shapes as shapes
 
 # GET endpoint tests
+def test_get_all_tasks(client, user_header):
+    response = client.get("/tasks/", headers=user_header)
+    assert response.status_code == 200
+
+    data = response.json
+    assert len(data) == 4
+
 
 # POST endpoint tests
 @pytest.mark.parametrize(

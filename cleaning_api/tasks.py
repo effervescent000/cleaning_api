@@ -11,6 +11,12 @@ one_task_schema = TaskSchema()
 multi_task_schema = TaskSchema(many=True)
 
 # GET endpoints
+@bp.route("/", methods=["GET"])
+@jwt_required()
+def get_tasks():
+    query = Task.query.filter_by(user_id=current_user.id).all()
+    return jsonify(multi_task_schema.dump(query))
+
 
 # POST endpoints
 @bp.route("/", methods=["POST"])
