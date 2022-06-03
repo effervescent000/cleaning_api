@@ -11,7 +11,17 @@ multi_room_schema = RoomSchema(many=True)
 
 # GET endpoints
 
+
+@bp.route("/", methods=["GET"])
+@jwt_required()
+def get_all_rooms():
+    query = Room.query.filter_by(user_id=current_user.id).all()
+    return jsonify(multi_room_schema.dump(query))
+
+
 # POST endpoints
+
+
 @bp.route("/", methods=["POST"])
 @jwt_required()
 def add_room():

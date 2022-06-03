@@ -1,6 +1,14 @@
 import pytest
 import tests.shapes as shapes
 
+# GET endpoint tests
+def test_get_all_rooms(client, user_header):
+    response = client.get("/rooms/", headers=user_header)
+    assert response.status_code == 200
+
+    data = response.json
+    assert len(data) == 2
+
 
 # POST endpoint tests
 

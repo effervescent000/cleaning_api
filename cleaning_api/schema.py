@@ -7,6 +7,7 @@ class TaskSchema(ma.Schema):
             "id",
             "label",
             "points",
+            "partial_effort",
             "last_done",
             "period",
             "note",
@@ -22,7 +23,7 @@ class RoomSchema(ma.Schema):
     class Meta:
         fields = ("id", "label", "type", "user_id", "tasks")
 
-    tasks = multi_task_schema
+    tasks = ma.Nested(multi_task_schema)
 
 
 class UserSchema(ma.Schema):
