@@ -9,7 +9,7 @@ import tests.shapes as shapes
     [
         (
             shapes.task_record_factory(room_id=3),
-            shapes.task_record_factory(room_id=3),
+            shapes.task_record_factory(room_id=3, user_id=2),
             "Return the passed in task.",
         )
     ],
