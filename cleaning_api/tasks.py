@@ -57,5 +57,22 @@ def add_task():
 
 
 # PUT endpoints
+@bp.route("/<id>", methods=["PUT"])
+@jwt_required()
+def update_task(id):
+    if id == "None":
+        return jsonify({"error": "invalid id"})
+    data = request.get_json()
+    task = Task.query.get(id)
+    task.label = data.get("label", task.label)
+    task.points = data.get("points", task.points)
+    task.partial_effort = data.get("partial_effort", task.partial_effort)
+    task.last_done = arrow.get(data.get("last_done", task.last_done)).datetime
+    task.period = data.get("period", task.period)
+    task.note = data.get("note", task.note)
+    task.room_id = data.get("room_id", task.room_id)
+    db.session.commit()
+    return jsonify(one_task_schema.dump(task))
+
 
 # DELETE endpoints
