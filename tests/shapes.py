@@ -24,7 +24,7 @@ def task_record_factory(
     user_id: int = None,
 ) -> factory_dict:
     return {
-        "id": id or randint(1, 100000),
+        "id": id,
         "label": label or f"Task {id}",
         "points": points or 1,
         "partial_effort": partial_effort or False,
