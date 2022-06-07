@@ -22,9 +22,9 @@ def test_get_all_rooms(client, user_header):
             "Return the created room when room type and label are both new.",
         ),
         (
-            shapes.room_record_factory(type="kitchen"),
-            shapes.room_record_factory(label="Kitchen", type="kitchen", user_id=2),
-            "Return the created room when room type and label are both new.",
+            shapes.room_record_factory(type="bedroom"),
+            shapes.room_record_factory(label="Bedroom", type="bedroom", user_id=2),
+            "Return the created room when room type and label are both pre-existing.",
         ),
     ],
 )
@@ -38,3 +38,21 @@ def test_add_room_valid(
     assert data["id"]
 
     assert clean_room_record(expected) == clean_room_record(data)
+
+
+@pytest.mark.parametrize(
+    "given, expected, should",
+    [
+        (
+            shapes.room_record_factory(),
+            {"error": "no room type specified"},
+            "Return an error when no type is specified.",
+        ),
+    ],
+)
+def test_add_room_invalid(client, user_header, given, expected, should):
+    response = client.post("/rooms/", json=given, headers=user_header)
+    assert response.status_code == 400
+
+    data = response.json
+    assert expected == data
