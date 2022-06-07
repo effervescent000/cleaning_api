@@ -64,6 +64,7 @@ def runner(app):
 def clean_room_record():
     def inner(record):
         record.pop("id", None)
+        record.pop("tasks", None)
         return record
 
     return inner

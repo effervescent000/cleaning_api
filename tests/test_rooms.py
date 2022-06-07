@@ -56,3 +56,46 @@ def test_add_room_invalid(client, user_header, given, expected, should):
 
     data = response.json
     assert expected == data
+
+
+# PUT endpoint tests
+
+
+@pytest.mark.parametrize(
+    "given, expected, should",
+    [
+        (
+            shapes.room_record_factory(
+                user_id=2, id=3, type="kitchen", label="Kitchen"
+            ),
+            shapes.room_record_factory(
+                user_id=2, id=3, type="kitchen", label="Kitchen"
+            ),
+            "Modify the specified room when inputs are valid.",
+        ),
+        (
+            shapes.room_record_factory(user_id=2, type="kitchen"),
+            {"error": "invalid id"},
+            "Return error when no ID is included.",
+        ),
+        (
+            {"id": 3, "user_id": 2, "label": "Guest bedroom"},
+            shapes.room_record_factory(
+                user_id=2, id=3, type="bedroom", label="Guest bedroom"
+            ),
+            "Modify only specified fields.",
+        ),
+        (
+            {"id": 3, "user_id": 2, "type": "kitchen"},
+            shapes.room_record_factory(
+                user_id=2, id=3, type="kitchen", label="Kitchen"
+            ),
+            "Modify a room label when the type changes and the label is unspecified.",
+        ),
+    ],
+)
+def test_update_room(client, user_header, clean_room_record, given, expected, should):
+    response = client.put(f"/rooms/{given['id']}", json=given, headers=user_header)
+
+    data = response.json
+    assert clean_room_record(expected) == clean_room_record(data)
