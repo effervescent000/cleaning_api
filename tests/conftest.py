@@ -93,10 +93,18 @@ def populate_test_data():
         db.session.commit()
 
     rooms = [
-        shapes.room_record_factory(id=1, label="Bedroom", user_id=users[0].id),
-        shapes.room_record_factory(id=2, label="Bathroom", user_id=users[0].id),
-        shapes.room_record_factory(id=3, label="Bedroom", user_id=users[1].id),
-        shapes.room_record_factory(id=4, label="Bathroom", user_id=users[1].id),
+        shapes.room_record_factory(
+            id=1, type="bedroom", label="Bedroom", user_id=users[0].id
+        ),
+        shapes.room_record_factory(
+            id=2, type="bathroom", label="Bathroom", user_id=users[0].id
+        ),
+        shapes.room_record_factory(
+            id=3, type="bedroom", label="Bedroom", user_id=users[1].id
+        ),
+        shapes.room_record_factory(
+            id=4, label="Bathroom", type="bathroom", user_id=users[1].id
+        ),
     ]
 
     for room in rooms:

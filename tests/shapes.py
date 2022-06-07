@@ -47,7 +47,7 @@ def room_record_factory(
     return {
         "id": id or randint(1, 100000),
         "label": label,
-        "type": type or "bedroom",
+        "type": type,
         "user_id": user_id,
         "tasks": tasks or [],
     }
