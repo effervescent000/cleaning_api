@@ -42,6 +42,20 @@ def add_room():
 
 # PUT endpoints
 
+
+@bp.route("/<id>", methods=["PUT"])
+@jwt_required()
+def update_room(id):
+    if id == "None":
+        return jsonify({"error": "invalid id"}), 400
+    data = request.get_json()
+    room = Room.query.get(id)
+    room.type = data.get("type", room.type)
+    room.label = data.get("label", room.type.title())
+    db.session.commit()
+    return jsonify(one_room_schema.dump(room))
+
+
 # DELETE endpoints
 
 # utils

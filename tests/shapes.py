@@ -42,14 +42,12 @@ def room_record_factory(
     label: str = None,
     type: str = None,
     user_id: int = None,
-    tasks: list = None,
 ) -> factory_dict:
     return {
-        "id": id or randint(1, 100000),
+        "id": id,
         "label": label,
         "type": type,
         "user_id": user_id,
-        "tasks": tasks or [],
     }
 
 
