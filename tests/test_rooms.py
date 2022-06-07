@@ -84,10 +84,14 @@ def test_add_room_invalid(client, user_header, given, expected, should):
                 user_id=2, id=3, type="bedroom", label="Guest bedroom"
             ),
             "Modify only specified fields.",
-        )
-        # test cases:
-        # - when type changes and label doesn't explicitly change,
-        # update the label to match the new type
+        ),
+        (
+            {"id": 3, "user_id": 2, "type": "kitchen"},
+            shapes.room_record_factory(
+                user_id=2, id=3, type="kitchen", label="Kitchen"
+            ),
+            "Modify a room label when the type changes and the label is unspecified.",
+        ),
     ],
 )
 def test_update_room(client, user_header, clean_room_record, given, expected, should):
