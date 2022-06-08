@@ -57,7 +57,7 @@ def add_task():
 
 
 # PUT endpoints
-@bp.route("/<id>", methods=["PUT"])
+@bp.route("/<id>/", methods=["PUT"])
 @jwt_required()
 def update_task(id):
     if id == "None":

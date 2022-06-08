@@ -43,7 +43,7 @@ def add_room():
 # PUT endpoints
 
 
-@bp.route("/<id>", methods=["PUT"])
+@bp.route("/<id>/", methods=["PUT"])
 @jwt_required()
 def update_room(id):
     if id == "None":
