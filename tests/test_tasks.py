@@ -57,10 +57,17 @@ def test_add_task(client, user_header, clean_task_record, given, expected, shoul
             ),
             "Modify only specified fields.",
         ),
+        (
+            {"id": 5, "last_done": None},
+            shapes.task_record_factory(
+                room_id=3, id=5, label="Dust surfaces", user_id=2, last_done="None"
+            ),
+            "Allow None as a valid last_done value.",
+        ),
     ],
 )
 def test_update_task(client, user_header, given, expected, should):
-    response = client.put(f"/tasks/{given['id']}", json=given, headers=user_header)
+    response = client.put(f"/tasks/{given['id']}/", json=given, headers=user_header)
     assert response.status_code == 200
 
     data = response.json

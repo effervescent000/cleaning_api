@@ -95,7 +95,7 @@ def test_add_room_invalid(client, user_header, given, expected, should):
     ],
 )
 def test_update_room(client, user_header, clean_room_record, given, expected, should):
-    response = client.put(f"/rooms/{given['id']}", json=given, headers=user_header)
+    response = client.put(f"/rooms/{given['id']}/", json=given, headers=user_header)
 
     data = response.json
     assert clean_room_record(expected) == clean_room_record(data)
