@@ -28,7 +28,9 @@ def task_record_factory(
         "label": label or f"Task {id}",
         "points": points or 1,
         "partial_effort": partial_effort or False,
-        "last_done": last_done or "2022-05-01T08:00:00",
+        "last_done": None
+        if last_done == "None"
+        else last_done or "2022-05-01T08:00:00",
         "period": period or 5,
         "note": note,
         "room_id": room_id,
