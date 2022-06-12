@@ -48,8 +48,8 @@ def add_room():
 def update_room(id):
     if id == "None":
         return jsonify({"error": "invalid id"}), 400
-    data = request.get_json()
     room = Room.query.get(id)
+    data = request.get_json()
     room.type = data.get("type", room.type)
     room.label = data.get("label", room.type.title())
     db.session.commit()
@@ -57,5 +57,20 @@ def update_room(id):
 
 
 # DELETE endpoints
+
+
+@bp.route("/<id>/", methods=["DELETE"])
+@jwt_required()
+def delete_room(id):
+    if id == "None":
+        return jsonify({"error": "invalid id"}), 400
+    room = Room.query.get(id)
+    if room.user_id == current_user.id:
+        db.session.delete(room)
+        db.session.commit()
+        remaining_rooms = Room.query.filter_by(user_id=current_user.id).all()
+        return jsonify(multi_room_schema.dump(remaining_rooms))
+    return jsonify({"error": "unauthorized"}), 401
+
 
 # utils
