@@ -99,3 +99,43 @@ def test_update_room(client, user_header, clean_room_record, given, expected, sh
 
     data = response.json
     assert clean_room_record(expected) == clean_room_record(data)
+
+
+@pytest.mark.parametrize(
+    "given, expected, should",
+    [
+        (
+            {"id": 3},
+            [
+                shapes.room_record_factory(
+                    id=4, label="Bathroom", type="bathroom", user_id=2
+                ),
+            ],
+            "Return user's remaining rooms when a room is deleted.",
+        )
+    ],
+)
+def test_delete_room_valid(
+    client, user_header, clean_room_record, given, expected, should
+):
+    response = client.delete(f"/rooms/{given['id']}/", headers=user_header)
+
+    data = response.json
+    assert clean_room_record(expected[0]) == clean_room_record(data[0])
+
+
+@pytest.mark.parametrize(
+    "given, expected, should",
+    [
+        (
+            {"id": 3},
+            {"error": "unauthorized"},
+            "Return an error if a user tries to delete another user's record.",
+        )
+    ],
+)
+def test_delete_room_invalid(client, admin_header, given, expected, should):
+    response = client.delete(f"/rooms/{given['id']}/", headers=admin_header)
+
+    data = response.json
+    assert expected == data
