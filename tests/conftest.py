@@ -122,30 +122,46 @@ def populate_test_data():
 
     tasks = [
         shapes.task_record_factory(
-            label="Clean clothes up", room_id=USER_ONE_BEDROOM.id, user_id=users[0].id
+            id=1,
+            label="Clean clothes up",
+            room_id=USER_ONE_BEDROOM.id,
+            user_id=users[0].id,
         ),
         shapes.task_record_factory(
-            label="Vacuum", room_id=USER_ONE_BEDROOM.id, user_id=users[0].id
+            id=2, label="Vacuum", room_id=USER_ONE_BEDROOM.id, user_id=users[0].id
         ),
         shapes.task_record_factory(
-            label="Clean mirror", room_id=USER_ONE_BATHROOM.id, user_id=users[0].id
+            id=3,
+            label="Clean mirror",
+            room_id=USER_ONE_BATHROOM.id,
+            user_id=users[0].id,
         ),
         shapes.task_record_factory(
-            label="Wash bath mat", room_id=USER_ONE_BATHROOM.id, user_id=users[0].id
+            id=4,
+            label="Wash bath mat",
+            room_id=USER_ONE_BATHROOM.id,
+            user_id=users[0].id,
         ),
         shapes.task_record_factory(
-            label="Dust surfaces", room_id=USER_TWO_BEDROOM.id, user_id=users[1].id
+            id=5,
+            label="Dust surfaces",
+            room_id=USER_TWO_BEDROOM.id,
+            user_id=users[1].id,
         ),
         shapes.task_record_factory(
+            id=6,
             label="Vacuum",
             room_id=USER_TWO_BEDROOM.id,
             user_id=users[1].id,
         ),
         shapes.task_record_factory(
-            label="Dust surfaces", room_id=USER_TWO_BATHROOM.id, user_id=users[1].id
+            id=7,
+            label="Dust surfaces",
+            room_id=USER_TWO_BATHROOM.id,
+            user_id=users[1].id,
         ),
         shapes.task_record_factory(
-            label="Clean sink", room_id=USER_TWO_BATHROOM.id, user_id=users[1].id
+            id=8, label="Clean sink", room_id=USER_TWO_BATHROOM.id, user_id=users[1].id
         ),
     ]
 
