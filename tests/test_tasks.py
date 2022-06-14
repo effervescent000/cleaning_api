@@ -75,3 +75,53 @@ def test_update_task(client, user_header, given, expected, should):
 
 
 # DELETE endpoint tests
+
+
+@pytest.mark.parametrize(
+    "given, expected, should",
+    [
+        (
+            {"id": 5},
+            [
+                shapes.task_record_factory(
+                    id=6,
+                    label="Vacuum",
+                    room_id=3,
+                    user_id=2,
+                ),
+                shapes.task_record_factory(
+                    id=7,
+                    label="Dust surfaces",
+                    room_id=4,
+                    user_id=2,
+                ),
+                shapes.task_record_factory(
+                    id=8, label="Clean sink", room_id=4, user_id=2
+                ),
+            ],
+            "Return user's remaining tasks when one is deleted.",
+        )
+    ],
+)
+def test_delete_room_valid(client, user_header, given, expected, should):
+    response = client.delete(f"/tasks/{given['id']}/", headers=user_header)
+
+    data = response.json
+    assert expected == data
+
+
+@pytest.mark.parametrize(
+    "given, expected, should",
+    [
+        (
+            {"id": 5},
+            {"error": "unauthorized"},
+            "Return an error if a user tries to delete another user's record.",
+        )
+    ],
+)
+def test_delete_room_invalid(client, admin_header, given, expected, should):
+    response = client.delete(f"/tasks/{given['id']}/", headers=admin_header)
+
+    data = response.json
+    assert expected == data

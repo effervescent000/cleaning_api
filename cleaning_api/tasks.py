@@ -82,3 +82,17 @@ def update_task(id):
 
 
 # DELETE endpoints
+
+
+@bp.route("/<id>/", methods=["DELETE"])
+@jwt_required()
+def delete_task(id):
+    if id == "None":
+        return jsonify({"error": "invalid id"}), 400
+    task = Task.query.get(id)
+    if task.user_id == current_user.id:
+        db.session.delete(task)
+        db.session.commit()
+        remaining = Task.query.filter_by(user_id=current_user.id).all()
+        return jsonify(multi_task_schema.dump(remaining))
+    return jsonify({"error": "unauthorized"}), 401
