@@ -108,3 +108,20 @@ def test_delete_room_valid(client, user_header, given, expected, should):
 
     data = response.json
     assert expected == data
+
+
+@pytest.mark.parametrize(
+    "given, expected, should",
+    [
+        (
+            {"id": 5},
+            {"error": "unauthorized"},
+            "Return an error if a user tries to delete another user's record.",
+        )
+    ],
+)
+def test_delete_room_invalid(client, admin_header, given, expected, should):
+    response = client.delete(f"/tasks/{given['id']}/", headers=admin_header)
+
+    data = response.json
+    assert expected == data
